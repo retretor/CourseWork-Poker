@@ -16,9 +16,12 @@ public:
     ~Player();
     Player(int chip);
     int GetChip() const;
-    void SetCard(Card* card);
-    void Print() const;
-private:
+    void SetChip(int chip);
+    void AddChip(int chip);
+    virtual void SetCard(Card* card);
+    virtual void Print() const;
+
+protected:
     int chip;
     std::deque<Card*> playerDeck;
 };

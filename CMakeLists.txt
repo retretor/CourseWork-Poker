@@ -3,4 +3,4 @@ project(Poker)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Poker main.cpp Classes/Card.cpp Classes/Card.h Classes/Deck.cpp Classes/Deck.h Classes/Player.cpp Classes/Player.h)
+add_executable(Poker main.cpp Classes/Card.cpp Classes/Card.h Classes/Deck.cpp Classes/Deck.h Classes/Player.cpp Classes/Player.h Classes/PlayerHuman.cpp Classes/PlayerHuman.h Classes/Table.cpp Classes/Table.h Classes/GameManager.cpp Classes/GameManager.h)

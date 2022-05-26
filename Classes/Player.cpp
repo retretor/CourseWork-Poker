@@ -11,6 +11,12 @@ Player::Player(int chip) : chip(chip) {};
 int Player::GetChip() const {
     return chip;
 }
+void Player::AddChip(int chip) {
+    this->chip += chip;
+}
+void Player::SetChip(int chip) {
+    this->chip = chip;
+}
 
 void Player::SetCard(Card* card) {
     playerDeck.push_back(card);
