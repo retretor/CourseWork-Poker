@@ -7,6 +7,7 @@
 #include "Card.h"
 #include "Deck.h"
 #include "Player.h"
+#include "Table.h"
 #include <deque>
 #include <iostream>
 
@@ -16,10 +17,15 @@ public:
     GameManager();
     ~GameManager();
     void CreatePlayers(int countOfPlayers, Deck* deck);
-    void PrintPlayers();
+    void CreateTable(Deck* deck);
+    void PrintPlayers() const;
+    void PrintTable() const;
+    void SayHello();
+    int GetCountOfPlayers() const;
 private:
-    int countOfPlayers;
+    int countOfPlayers, maxPlayers = 23;
     std::deque<Player*> players;
+    std::deque<Table*> table;
 };
 
 

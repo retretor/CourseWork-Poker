@@ -26,6 +26,7 @@ Deck::~Deck() {
 }
 
 void Deck::Print() const {
+    std::cout << "Deck is: ";
     for(Card* card : deck)
     {
         card->Print();

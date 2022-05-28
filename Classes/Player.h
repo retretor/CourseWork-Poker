@@ -23,6 +23,7 @@ public:
 
 protected:
     int chip;
+private:
     std::deque<Card*> playerDeck;
 };
 

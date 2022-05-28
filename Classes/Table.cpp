@@ -12,7 +12,7 @@ Table::~Table() {
 }
 
 Table::Table() : Player() {
-
+    chip = 0;
 }
 
 Table::Table(int chip) : Player(chip) {
