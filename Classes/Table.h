@@ -6,19 +6,19 @@
 #define POKER_TABLE_H
 #include "Card.h"
 #include "Deck.h"
-#include "Player.h"
 #include <deque>
 #include <iostream>
 
-class Table : public Player {
+class Table {
 public:
     Table();
     ~Table();
     Table(int chip);
-    void SetCard(Card* card) override;
-    void Print() const override;
-
+    void SetCard(Card* card);
+    void Print() const;
+    void AddChip(int chip);
 private:
+    int chip;
     std::deque<Card*> tableDeck;
 };
 

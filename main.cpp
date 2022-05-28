@@ -8,15 +8,12 @@
 
 int main() {
 //create players, deck & table
-    //std::cout << "How many players will play? ";
-    //std::cin >> countOfPlayers;
 
     try
     {
         Deck deck;
         deck.Shuffle();
         deck.Print();
-        std::cout << std::endl;
 
         GameManager game;
         game.CreatePlayers(game.GetCountOfPlayers(), &deck);
@@ -28,12 +25,16 @@ int main() {
 
         game.CreateTable(&deck);
         game.PrintTable();
-        std::cout << std::endl;
+
+
+        game.SetABet();
         std::cout << std::endl;
 
+
+        game.PrintPlayers();
+        game.PrintTable();
 
         deck.Print();
-        std::cout << std::endl;
     }
     catch(std::exception& ex)
     {

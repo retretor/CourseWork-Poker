@@ -7,6 +7,7 @@
 
 #include "Card.h"
 #include "Deck.h"
+#include "Table.h"
 #include <deque>
 #include <iostream>
 
@@ -18,12 +19,11 @@ public:
     int GetChip() const;
     void SetChip(int chip);
     void AddChip(int chip);
-    virtual void SetCard(Card* card);
-    virtual void Print() const;
-
-protected:
-    int chip;
+    void SetCard(Card* card);
+    void Print() const;
+    void SetABet(int chip, Table* table);
 private:
+    int chip;
     std::deque<Card*> playerDeck;
 };
 

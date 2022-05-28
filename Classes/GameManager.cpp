@@ -87,6 +87,26 @@ void GameManager::SayHello(){
     countOfPlayers = n;
 }
 
+void GameManager::SetABet() {
+    int i = 1;
+    for(Player* player : players){
+        std::cout << "Player " << i << "How many chips you will bet?:";
+        int c;
+        std::cin >> c;
+        player->SetABet(c, table[0]);
+        i++;
+    }
+}
+
+
+void GameManager::Play() {
+
+}
+
+
+void GameManager::Result() {
+
+}
 
 //---------------------------------------------------------
 

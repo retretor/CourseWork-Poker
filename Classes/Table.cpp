@@ -11,11 +11,10 @@ Table::~Table() {
     tableDeck.clear();
 }
 
-Table::Table() : Player() {
-    chip = 0;
+Table::Table() : chip(0) {
 }
 
-Table::Table(int chip) : Player(chip) {
+Table::Table(int chip) : chip(chip) {
 
 }
 void Table::Print() const {
@@ -24,7 +23,13 @@ void Table::Print() const {
         card->Print();
         std::cout << " ";
     }
+    std::cout << "  Chips: " << chip;
+    std::cout << std::endl;
 }
 void Table::SetCard(Card* card) {
     tableDeck.push_back(card);
+}
+
+void Table::AddChip(int chip) {
+    this->chip += chip;
 }

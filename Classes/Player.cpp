@@ -7,6 +7,13 @@
 
 Player::Player() : chip(STANDARD_COUNT_OF_CHIPS) {};
 Player::Player(int chip) : chip(chip) {};
+Player::~Player() {
+    for(Card* card : playerDeck)
+    {
+        delete card;
+    }
+    playerDeck.clear();
+}
 
 int Player::GetChip() const {
     return chip;
@@ -29,12 +36,11 @@ void Player::Print() const {
         card->Print();
         std::cout << " ";
     }
+    std::cout << "  Chips: " << chip;
 }
 
-Player::~Player() {
-    for(Card* card : playerDeck)
-    {
-        delete card;
-    }
-    playerDeck.clear();
+void Player::SetABet(int chip, Table *table) {
+    if(chip > this->chip) throw std::invalid_argument("Too high a bet");
+    AddChip(-chip);
+    table->AddChip(chip);
 }
