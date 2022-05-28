@@ -22,6 +22,11 @@ GameManager::~GameManager() {
         delete _table;
     }
     table.clear();
+    for(Hand* _hand : hand)
+    {
+        delete _hand;
+    }
+    hand.clear();
 }
 
 
@@ -76,6 +81,40 @@ void GameManager::PrintTable() const {
     std::cout << std::endl;
 }
 
+void GameManager::CreateHand() {
+    for(int i = 0; i < countOfPlayers; i++)
+    {
+        hand.push_front(new Hand);
+    }
+
+    int n = 0;
+    for(Player* player : players)
+    {
+        for(int i = 0; i < 2; i++)
+        {
+            hand[n]->SetCard(player->GetDeck()[i]);
+        }
+        n++;
+    }
+    for(int i = 0; i < countOfPlayers; i++)
+    {
+        for(int j = 0; j < 5; j++)
+        {
+            hand[i]->SetCard(table[0]->GetDeck()[j]);
+        }
+    }
+}
+
+void GameManager::PrintHand() {
+    int i = 1;
+    //Print "Player 1: 2C 3S 2D 5C 10C"
+    for(Hand* _hand : hand) {
+        std::cout << "Player " << i << ": ";
+        _hand->Print();
+        std::cout << std::endl;
+        i++;
+    }
+}
 
 //---------------------------------------------------------
 

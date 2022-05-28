@@ -44,3 +44,7 @@ void Player::SetABet(int chip, Table *table) {
     AddChip(-chip);
     table->AddChip(chip);
 }
+
+std::deque<Card *> Player::GetDeck() {
+    return playerDeck;
+}

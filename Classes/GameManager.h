@@ -8,8 +8,11 @@
 #include "Deck.h"
 #include "Player.h"
 #include "Table.h"
+#include "Hand.h"
 #include <deque>
 #include <iostream>
+#include <vector>
+#include <string>
 
 
 class GameManager {
@@ -27,6 +30,18 @@ public:
         STRAIGHT_FLUSH,
         ROYAL_FLUSH
     };
+    std::vector<std::vector<std::string>> Combinations_vector{
+            {"1R", "0R", "0R", "0R", "0R"},
+            {"1R", "1R", "0R", "0R", "0R"},
+            {"1R", "1R", "1R", "0R", "0R"},
+            {"1R", "1R", "2R", "2R", "0R"},
+            {"1R", "2R", "3R", "4R", "5R"},
+            {"0A", "0A", "0A", "0A", "0A"},
+            {"1R", "1R", "2R", "2R", "2R"},
+            {"1R", "1R", "1R", "1R", "0R"},
+            {"1A", "2A", "3A", "4A", "5A"},
+            {"6A", "7A", "8A", "9A", "10A"},
+    };
     GameManager();
     ~GameManager();
     void CreatePlayers(int countOfPlayers, Deck* deck);
@@ -38,10 +53,13 @@ public:
     void SayHello();
     int GetCountOfPlayers() const;
     void SetABet();
+    void CreateHand();
+    void PrintHand();
 private:
     int countOfPlayers, maxPlayers = 23;
     std::deque<Player*> players;
     std::deque<Table*> table;
+    std::deque<Hand*> hand;
 };
 
 

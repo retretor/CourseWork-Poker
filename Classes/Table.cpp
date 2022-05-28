@@ -33,3 +33,7 @@ void Table::SetCard(Card* card) {
 void Table::AddChip(int chip) {
     this->chip += chip;
 }
+
+std::deque<Card *> Table::GetDeck() {
+    return tableDeck;
+}
