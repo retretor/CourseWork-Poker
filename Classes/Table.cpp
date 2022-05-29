@@ -37,3 +37,7 @@ void Table::AddChip(int chip) {
 std::deque<Card *> Table::GetDeck() {
     return tableDeck;
 }
+
+int Table::GetChip() const {
+    return chip;
+}

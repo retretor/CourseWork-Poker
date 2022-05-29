@@ -17,6 +17,7 @@ public:
     void SetCard(Card* card);
     void Print() const;
     void AddChip(int chip);
+    int GetChip() const;
     std::deque<Card*> GetDeck();
 private:
     int chip;

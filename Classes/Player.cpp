@@ -5,8 +5,8 @@
 #include "Player.h"
 #define STANDARD_COUNT_OF_CHIPS 1000
 
-Player::Player() : chip(STANDARD_COUNT_OF_CHIPS) {};
-Player::Player(int chip) : chip(chip) {};
+Player::Player() : chip(STANDARD_COUNT_OF_CHIPS), combination(0) {};
+Player::Player(int chip) : chip(chip), combination(0) {};
 Player::~Player() {
     for(Card* card : playerDeck)
     {
@@ -47,4 +47,25 @@ void Player::SetABet(int chip, Table *table) {
 
 std::deque<Card *> Player::GetDeck() {
     return playerDeck;
+}
+
+int Player::GetCombination() const{
+    return combination;
+}
+
+void Player::SetCombination(int c) {
+    combination = c;
+}
+
+int Player::GetWeight() const {
+    return playerDeck[0]->GetRank() + playerDeck[1]->GetRank();
+}
+
+
+void Player::SetWin(bool win) {
+    isWin = win;
+}
+
+bool Player::GetWin() const{
+    return isWin;
 }

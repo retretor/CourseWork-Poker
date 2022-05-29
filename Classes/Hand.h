@@ -15,6 +15,7 @@ public:
     ~Hand();
     void Print() const;
     void SetCard(Card* card);
+    std::deque<Card*> GetDeck();
 private:
     std::deque<Card*> handDeck;
 };

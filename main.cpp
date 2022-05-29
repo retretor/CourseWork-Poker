@@ -5,7 +5,6 @@
 #include "./Classes/Table.h"
 #include "./Classes/GameManager.h"
 
-
 int main() {
 //create players, deck & table
 
@@ -37,6 +36,11 @@ int main() {
         //---------------------------------------------------------------------
         //game
         game.SetABet();
+        std::cout << std::endl;
+
+
+        game.PlayerHasCombo();
+        game.Result();
         std::cout << std::endl;
 
 

@@ -23,8 +23,14 @@ public:
     std::deque<Card*> GetDeck();
     void Print() const;
     void SetABet(int chip, Table* table);
+    int GetCombination() const;
+    void SetCombination(int c);
+    int GetWeight() const;
+    void SetWin(bool win);
+    bool GetWin() const;
 private:
-    int chip;
+    int chip, combination;
+    bool isWin;
     std::deque<Card*> playerDeck;
 };
 

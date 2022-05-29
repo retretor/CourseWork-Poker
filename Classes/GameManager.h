@@ -9,10 +9,14 @@
 #include "Player.h"
 #include "Table.h"
 #include "Hand.h"
+#include "Combination.h"
 #include <deque>
 #include <iostream>
+#include <algorithm>
 #include <vector>
 #include <string>
+#include <stdexcept>
+#include <exception>
 
 
 class GameManager {
@@ -31,16 +35,16 @@ public:
         ROYAL_FLUSH
     };
     std::vector<std::vector<std::string>> Combinations_vector{
-            {"1R", "0R", "0R", "0R", "0R"},
-            {"1R", "1R", "0R", "0R", "0R"},
-            {"1R", "1R", "1R", "0R", "0R"},
-            {"1R", "1R", "2R", "2R", "0R"},
-            {"1R", "2R", "3R", "4R", "5R"},
-            {"0A", "0A", "0A", "0A", "0A"},
-            {"1R", "1R", "2R", "2R", "2R"},
-            {"1R", "1R", "1R", "1R", "0R"},
-            {"1A", "2A", "3A", "4A", "5A"},
-            {"6A", "7A", "8A", "9A", "10A"},
+            {"1R", "0R", "0R", "0R", "0R"}, //HIGH_CARD      +
+            {"1R", "1R", "0R", "0R", "0R"}, //PAIR           +
+            {"1R", "1R", "2R", "2R", "0R"}, //TWO_PAIR       +
+            {"1R", "1R", "1R", "0R", "0R"}, //THREE_OF_A_KIND+
+            {"1R", "2R", "3R", "4R", "5R"}, //STRAIGHT       +
+            {"0A", "0A", "0A", "0A", "0A"}, //FLUSH          +
+            {"1R", "1R", "2R", "2R", "2R"}, //FULL_HOUSE     +
+            {"1R", "1R", "1R", "1R", "0R"}, //FOUR_OF_A_KIND +
+            {"1A", "2A", "3A", "4A", "5A"}, //STRAIGHT_FLUSH +
+            {"6A", "7A", "8A", "9A", "10A"} //ROYAL_FLUSH    +
     };
     GameManager();
     ~GameManager();
@@ -55,6 +59,7 @@ public:
     void SetABet();
     void CreateHand();
     void PrintHand();
+    void PlayerHasCombo();
 private:
     int countOfPlayers, maxPlayers = 23;
     std::deque<Player*> players;

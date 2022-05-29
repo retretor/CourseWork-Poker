@@ -24,3 +24,7 @@ void Hand::Print() const {
 void Hand::SetCard(Card *card) {
     handDeck.push_back(card);
 }
+
+std::deque<Card *> Hand::GetDeck() {
+    return handDeck;
+}
