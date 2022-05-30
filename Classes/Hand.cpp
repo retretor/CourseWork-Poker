@@ -28,3 +28,7 @@ void Hand::SetCard(Card *card) {
 std::deque<Card *> Hand::GetDeck() {
     return handDeck;
 }
+
+Card::Ranks Hand::GetCardRank(int itter) const{
+    return handDeck[itter]->GetRank();
+}

@@ -58,7 +58,9 @@ void Player::SetCombination(int c) {
 }
 
 int Player::GetWeight() const {
-    return playerDeck[0]->GetRank() + playerDeck[1]->GetRank();
+    if(playerDeck[0]->GetRank() > playerDeck[1]->GetRank())
+        return playerDeck[0]->GetRank();
+    return playerDeck[1]->GetRank();
 }
 
 

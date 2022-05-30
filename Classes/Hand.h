@@ -16,6 +16,7 @@ public:
     void Print() const;
     void SetCard(Card* card);
     std::deque<Card*> GetDeck();
+    Card::Ranks GetCardRank(int itter) const;
 private:
     std::deque<Card*> handDeck;
 };

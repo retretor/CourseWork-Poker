@@ -215,13 +215,13 @@ void GameManager::PlayerHasCombo() {
             ranks[j] = hand[i]->GetDeck()[j]->GetRank();
             suits[j] = hand[i]->GetDeck()[j]->GetSuit();
         }
-        std::sort(ranks.begin(), ranks.end());
-        std::sort(suits.begin(), suits.end());
 
+        //std::sort(ranks.begin(), ranks.end()); //-
+        std::sort(suits.begin(), suits.end()); //-
 
 
         //Flush
-        int pos_flush = -1, c_2 = 0;
+        int pos_flush = -1;
         for(int j = 0; j < 3; j++)
         {
             if((suits[j] == (suits[j + 1]) && suits[j + 1] == (suits[j + 2]) &&
@@ -234,10 +234,145 @@ void GameManager::PlayerHasCombo() {
                 pos_flush++;
             }
         }
+        int pos_straight = -1, pos_two_pair = -1,
+        pos_pair = -1, pos_three = -1,
+        pos_four = -1, pos_straight_flush = -1;
+        if(pos_flush == -1)
+        {
+            for(int j = 0; j < 7; j++)
+            {
+                ranks[j] = hand[i]->GetDeck()[j]->GetRank();
+                suits[j] = hand[i]->GetDeck()[j]->GetSuit();
+            }
+            std::sort(ranks.begin(), ranks.end()); //-
+            //Straight
+            for(int j = 0; j < 3; j++)
+            {
+                if(ranks[j] == (ranks[j + 1] + 1) && ranks[j + 1] == (ranks[j + 2] + 1) &&
+                   ranks[j + 2] == (ranks[j + 3] + 1) && ranks[j + 3] == (ranks[j + 4] + 1))
+                {
+                    for(int p = 0; p < 5; p++)
+                    {
+                        combination[p][0] = static_cast<char>((p + 1));
+                    }
+                    pos_straight = j;
+                }
+            }
+            //FOUR
+            for(int j = 0; j < 4; j++)
+            {
+                if(ranks[j] == (ranks[j + 1]) && ranks[j + 1] == (ranks[j + 2]) &&
+                   ranks[j + 2] == (ranks[j + 3]))
+                {
+                    for(int p = 0; p < 4; p++)
+                    {
+                        combination[p][0] = '1';
+                    }
+                    pos_four = j;
+                    break;
+                }
+            }
+            //THREE
+            for(int j = 0; j < 5; j++)
+            {
+                if(ranks[j] == (ranks[j + 1]) && ranks[j + 1] == (ranks[j + 2]))
+                {
+                    pos_three += j;
+                }
+            }
+            if(pos_three != -1)
+                for(int p = 0; p < 3; p++)
+                {
+                    combination[p][0] = '1';
+                }
+            //PAIR
+
+            for(int j = 0; j < 6; j++)
+            {
+                if(ranks[j] == ranks[j + 1])
+                {
+                    pos_pair += j;
+                }
+            }
+            if(pos_pair != -1)
+                for(int p = 0; p < 2; p++)
+                {
+                    combination[p][0] = '1';
+                }
+            //TWO PAIR
+            for(int j = 0; j < 6; j++)
+            {
+                if(ranks[j] == ranks[j + 1] && pos_pair != j && pos_pair != j + 1 && pos_pair != j - 1)
+                {
+                    pos_two_pair += j;
+                }
+            }
+            if(pos_two_pair != -1)
+            {
+                for(int p = 0; p < 2; p++)
+                {
+                    combination[p][0] = '1';
+                }
+                for(int p = 2; p < 4; p++)
+                {
+                    combination[p][0] = '2';
+                }
+            }
+            //FullHouse
+            if(pos_three != -1)
+            {
+                int pos_pair_in_house = -1;
+                for(int j = 0; j < 6; j++)
+                {
+                    if(ranks[j] == ranks[j + 1] && ranks[j] != ranks[pos_three])
+                    {
+                        pos_pair_in_house++;
+                    }
+                }
+                if(pos_pair_in_house != -1)
+                {
+                    for(int p = 0; p < 2; p++)
+                    {
+                        combination[p][0] = '1';
+                    }
+                    for(int p = 2; p < 5; p++)
+                    {
+                        combination[p][0] = '2';
+                    }
+                }
+            }
+
+            //HIGH
+            int max = 0;
+            if(pos_pair == -1 && pos_three == -1 && pos_two_pair == -1 && pos_straight == -1 &&
+               pos_flush == -1 && pos_four == -1 && pos_straight_flush == -1)
+            {
+                for(int j = 0; j < 6; j++)
+                {
+                    if(ranks[j] > ranks[j + 1])
+                    {
+                        max = j;
+                    }
+                }
+                combination[0][0] = '1';
+            }
+        }
+        else
+        {
+            for(int j = pos_flush; j < 7; j++)
+            {
+                ranks[j] = hand[i]->GetCardRank(j);
+            }
+
+                std::sort(ranks.at(pos_flush), ranks.end()); //-
+
+        }
+
+/*
+
         //Straight
-        if(pos_flush != -1) c_2 = pos_flush;
         int pos_straight = -1;
-        for(int j = c_2; j < 3; j++)
+        for(int j = 0; j < 3; j++)
         {
             if(ranks[j] == (ranks[j + 1] + 1) && ranks[j + 1] == (ranks[j + 2] + 1) &&
                     ranks[j + 2] == (ranks[j + 3] + 1) && ranks[j + 3] == (ranks[j + 4] + 1))
@@ -246,8 +381,14 @@ void GameManager::PlayerHasCombo() {
                 {
                     combination[p][0] = static_cast<char>((p + 1));
                 }
-                pos_straight++;
+                pos_straight = j;
             }
+        }
+        //Straight flush
+        int pos_straight_flush = -1;
+        if(pos_flush != -1 && pos_straight == pos_flush)
+        {
+            pos_straight_flush = pos_flush;
         }
         //ROYAL_FLUSH
         if(pos_flush != -1 && pos_straight != -1 && combination[4][0] == '5' &&
@@ -259,6 +400,7 @@ void GameManager::PlayerHasCombo() {
             }
         }
         //FOUR
+        int pos_four = -1;
         for(int j = 0; j < 4; j++)
         {
             if(ranks[j] == (ranks[j + 1]) && ranks[j + 1] == (ranks[j + 2]) &&
@@ -268,6 +410,7 @@ void GameManager::PlayerHasCombo() {
                 {
                     combination[p][0] = '1';
                 }
+                pos_four = j;
                 break;
             }
         }
@@ -277,7 +420,7 @@ void GameManager::PlayerHasCombo() {
         {
             if(ranks[j] == (ranks[j + 1]) && ranks[j + 1] == (ranks[j + 2]))
             {
-                pos_three++;
+                pos_three += j;
             }
         }
         if(pos_three != -1)
@@ -291,7 +434,7 @@ void GameManager::PlayerHasCombo() {
         {
             if(ranks[j] == ranks[j + 1])
             {
-                pos_pair++;
+                pos_pair += j;
             }
         }
         if(pos_pair != -1)
@@ -305,7 +448,7 @@ void GameManager::PlayerHasCombo() {
         {
             if(ranks[j] == ranks[j + 1] && pos_pair != j && pos_pair != j + 1 && pos_pair != j - 1)
             {
-                pos_two_pair++;
+                pos_two_pair += j;
             }
         }
         if(pos_two_pair != -1)
@@ -344,8 +487,21 @@ void GameManager::PlayerHasCombo() {
         }
 
         //HIGH
-        int pos_high = 6;
-        combination[0][0] = '1';
+        int max = 0;
+        if(pos_pair == -1 && pos_three == -1 && pos_two_pair == -1 && pos_straight == -1 &&
+           pos_flush == -1 && pos_four == -1 && pos_straight_flush == -1)
+        {
+            for(int j = 0; j < 6; j++)
+            {
+                if(ranks[j] > ranks[j + 1])
+                {
+                    max = j;
+                }
+            }
+            combination[0][0] = '1';
+        }
+
+*/
 
         for(int p = 9; p >= 0; p--)
         {
@@ -361,6 +517,8 @@ void GameManager::PlayerHasCombo() {
                 }
             }
         }
+
+
     }
 
 
@@ -426,7 +584,7 @@ void GameManager::Result() {
 
     for(int i = 0; i < countOfPlayers; i++)
     {
-        if(players[i]->GetWin())
+        if(players[i]->GetWin() == true)
         {
             c++;
             same_players_combo.push_back(players[i]);
@@ -437,6 +595,8 @@ void GameManager::Result() {
     for(Player* player : same_players_combo)
     {
         player->AddChip(winChip);
+        player->Print();
+        std::cout << " win ";
     }
 
 
