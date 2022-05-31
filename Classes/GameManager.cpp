@@ -242,7 +242,7 @@ void GameManager::PlayerHasCombo() {
             for(int j = 0; j < 7; j++)
             {
                 ranks[j] = hand[i]->GetDeck()[j]->GetRank();
-                suits[j] = hand[i]->GetDeck()[j]->GetSuit();
+                //suits[j] = hand[i]->GetDeck()[j]->GetSuit();
             }
             std::sort(ranks.begin(), ranks.end()); //-
             //Straight
@@ -364,7 +364,34 @@ void GameManager::PlayerHasCombo() {
                 ranks[j] = hand[i]->GetCardRank(j);
             }
 
-                std::sort(ranks.at(pos_flush), ranks.end()); //-
+            std::sort(ranks.begin()+pos_flush, ranks.end()); //-
+
+            //Straight
+
+            if(ranks[pos_flush] == (ranks[pos_flush + 1] + 1) && ranks[pos_flush + 1] == (ranks[pos_flush + 2] + 1) &&
+               ranks[pos_flush + 2] == (ranks[pos_flush + 3] + 1) && ranks[pos_flush + 3] == (ranks[pos_flush + 4] + 1))
+            {
+                for(int p = 0; p < 5; p++)
+                {
+                    combination[p][0] = static_cast<char>((p + 1));
+                }
+                pos_straight = pos_flush;
+            }
+
+            //Straight flush
+            if(pos_straight == pos_flush)
+            {
+                pos_straight_flush = pos_flush;
+            }
+            //ROYAL_FLUSH
+            if(pos_straight != -1 && combination[4][0] == '5' &&
+               ranks[pos_straight + 4] == 14)
+            {
+                for(int p = 0; p < 5; p++)
+                {
+                    combination[p][0] = static_cast<char>((p + 6));
+                }
+            }
 
         }
 
