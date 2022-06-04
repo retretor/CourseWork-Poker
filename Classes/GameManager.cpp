@@ -137,7 +137,7 @@ void GameManager::SetABet() {
         i++;
     }
 }
-
+//make a check for the presence of poker combinations in the deque hand
 void GameManager::PlayerHasCombo() {
     /*std::deque<Card::Ranks> ranks(7);
     std::deque<Card::Suits> suits(7);
@@ -215,174 +215,69 @@ void GameManager::PlayerHasCombo() {
             ranks[j] = hand[i]->GetDeck()[j]->GetRank();
             suits[j] = hand[i]->GetDeck()[j]->GetSuit();
         }
-
         //std::sort(ranks.begin(), ranks.end()); //-
         std::sort(suits.begin(), suits.end()); //-
 
 
         //Flush
         int pos_flush = -1;
-        for(int j = 0; j < 3; j++)
-        {
-            if((suits[j] == (suits[j + 1]) && suits[j + 1] == (suits[j + 2]) &&
-                suits[j + 2] == (suits[j + 3]) && suits[j + 3] == (suits[j + 4])))
-            {
-                for(int p = 0; p < 5; p++)
-                {
-                    combination[p][1] = 'A';
-                }
-                pos_flush++;
-            }
-        }
+
+        IsFlush(pos_flush, suits, combination);
+
+
         int pos_straight = -1, pos_two_pair = -1,
         pos_pair = -1, pos_three = -1,
         pos_four = -1, pos_straight_flush = -1;
+
+
         if(pos_flush == -1)
         {
-            for(int j = 0; j < 7; j++)
-            {
-                ranks[j] = hand[i]->GetDeck()[j]->GetRank();
-                //suits[j] = hand[i]->GetDeck()[j]->GetSuit();
-            }
-            std::sort(ranks.begin(), ranks.end()); //-
-            //Straight
-            for(int j = 0; j < 3; j++)
-            {
-                if(ranks[j] == (ranks[j + 1] + 1) && ranks[j + 1] == (ranks[j + 2] + 1) &&
-                   ranks[j + 2] == (ranks[j + 3] + 1) && ranks[j + 3] == (ranks[j + 4] + 1))
-                {
-                    for(int p = 0; p < 5; p++)
-                    {
-                        combination[p][0] = static_cast<char>((p + 1));
-                    }
-                    pos_straight = j;
-                }
-            }
-            //FOUR
-            for(int j = 0; j < 4; j++)
-            {
-                if(ranks[j] == (ranks[j + 1]) && ranks[j + 1] == (ranks[j + 2]) &&
-                   ranks[j + 2] == (ranks[j + 3]))
-                {
-                    for(int p = 0; p < 4; p++)
-                    {
-                        combination[p][0] = '1';
-                    }
-                    pos_four = j;
-                    break;
-                }
-            }
-            //THREE
-            for(int j = 0; j < 5; j++)
-            {
-                if(ranks[j] == (ranks[j + 1]) && ranks[j + 1] == (ranks[j + 2]))
-                {
-                    pos_three += j;
-                }
-            }
-            if(pos_three != -1)
-                for(int p = 0; p < 3; p++)
-                {
-                    combination[p][0] = '1';
-                }
-            //PAIR
 
-            for(int j = 0; j < 6; j++)
-            {
-                if(ranks[j] == ranks[j + 1])
-                {
-                    pos_pair += j;
-                }
-            }
-            if(pos_pair != -1)
-                for(int p = 0; p < 2; p++)
-                {
-                    combination[p][0] = '1';
-                }
+            std::sort(ranks.begin(), ranks.end()); //-
+
+
+            //Straight
+
+            IsStraight(pos_straight, ranks, combination);
+
+            //FOUR
+            IsFour(pos_four, ranks, combination);
+
+            //THREE
+            IsThree(pos_three, ranks, combination);
+
+            //PAIR
+            IsPair(pos_pair, ranks, combination);
+
             //TWO PAIR
-            for(int j = 0; j < 6; j++)
-            {
-                if(ranks[j] == ranks[j + 1] && pos_pair != j && pos_pair != j + 1 && pos_pair != j - 1)
-                {
-                    pos_two_pair += j;
-                }
-            }
-            if(pos_two_pair != -1)
-            {
-                for(int p = 0; p < 2; p++)
-                {
-                    combination[p][0] = '1';
-                }
-                for(int p = 2; p < 4; p++)
-                {
-                    combination[p][0] = '2';
-                }
-            }
+            IsTwoPair(pos_two_pair, pos_pair, ranks, combination);
+
             //FullHouse
-            if(pos_three != -1)
-            {
-                int pos_pair_in_house = -1;
-                for(int j = 0; j < 6; j++)
-                {
-                    if(ranks[j] == ranks[j + 1] && ranks[j] != ranks[pos_three])
-                    {
-                        pos_pair_in_house++;
-                    }
-                }
-                if(pos_pair_in_house != -1)
-                {
-                    for(int p = 0; p < 2; p++)
-                    {
-                        combination[p][0] = '1';
-                    }
-                    for(int p = 2; p < 5; p++)
-                    {
-                        combination[p][0] = '2';
-                    }
-                }
-            }
+            if(pos_three != -1) IsFullHouse(pos_three, ranks, combination);
 
             //HIGH
+
             int max = 0;
             if(pos_pair == -1 && pos_three == -1 && pos_two_pair == -1 && pos_straight == -1 &&
-               pos_flush == -1 && pos_four == -1 && pos_straight_flush == -1)
+               pos_flush == -1 && pos_four == -1)
             {
-                for(int j = 0; j < 6; j++)
-                {
-                    if(ranks[j] > ranks[j + 1])
-                    {
-                        max = j;
-                    }
-                }
-                combination[0][0] = '1';
+                IsMaxCard(max, ranks, combination);
             }
         }
         else
         {
-            for(int j = pos_flush; j < 7; j++)
-            {
-                ranks[j] = hand[i]->GetCardRank(j);
-            }
 
-            std::sort(ranks.begin()+pos_flush, ranks.end()); //-
+            std::sort(ranks.begin() + pos_flush, ranks.end()); //-
 
             //Straight
-
-            if(ranks[pos_flush] == (ranks[pos_flush + 1] + 1) && ranks[pos_flush + 1] == (ranks[pos_flush + 2] + 1) &&
-               ranks[pos_flush + 2] == (ranks[pos_flush + 3] + 1) && ranks[pos_flush + 3] == (ranks[pos_flush + 4] + 1))
-            {
-                for(int p = 0; p < 5; p++)
-                {
-                    combination[p][0] = static_cast<char>((p + 1));
-                }
-                pos_straight = pos_flush;
-            }
+            IsStraight(pos_straight, ranks, combination);
 
             //Straight flush
             if(pos_straight == pos_flush)
             {
                 pos_straight_flush = pos_flush;
             }
+
             //ROYAL_FLUSH
             if(pos_straight != -1 && combination[4][0] == '5' &&
                ranks[pos_straight + 4] == 14)
@@ -548,26 +443,27 @@ void GameManager::PlayerHasCombo() {
 
     }
 
-
-    int m_combo_player = 0;
+    int combo_player = 0;
     std::deque<int> same_players_combo;
+
+
     for(int i = 1; i < countOfPlayers; i++)
     {
         if(players[i]->GetCombination() > players[i - 1]->GetCombination())
         {
-            m_combo_player = i;
+            combo_player = i;
             same_players_combo.clear();
         }
         else if(players[i]->GetCombination() == players[i - 1]->GetCombination())
         {
             if(players[i]->GetWeight() > players[i - 1]->GetWeight())
             {
-                m_combo_player = i;
+                combo_player = i;
                 same_players_combo.clear();
             }
             else if(players[i]->GetWeight() < players[i - 1]->GetWeight())
             {
-                m_combo_player = i - 1;
+                combo_player = i - 1;
                 same_players_combo.clear();
             }
             else
@@ -581,10 +477,15 @@ void GameManager::PlayerHasCombo() {
                     same_players_combo.push_back(i);
             }
         }
+        else
+        {
+            combo_player = i - 1;
+            same_players_combo.clear();
+        }
     }
     if(same_players_combo.empty())
     {
-        players[m_combo_player]->SetWin(true);
+        players[combo_player]->SetWin(true);
     }
     else
     {
@@ -598,6 +499,154 @@ void GameManager::PlayerHasCombo() {
     suits.clear();
 
 }
+void GameManager::IsFlush(int &pos_flush,
+                          std::deque<Card::Suits> &suits,
+                          std::vector<std::string> &combination) {
+    for(int j = 0; j < 3; j++)
+    {
+        if((suits[j] == (suits[j + 1]) && suits[j + 1] == (suits[j + 2]) &&
+            suits[j + 2] == (suits[j + 3]) && suits[j + 3] == (suits[j + 4])))
+        {
+            for(int p = 0; p < 5; p++)
+            {
+                combination[p][1] = 'A';
+            }
+            pos_flush++;
+        }
+    }
+}
+
+void GameManager::IsStraight(int &pos_straight,
+                             std::deque<Card::Ranks> &ranks,
+                             std::vector<std::string> &combination) {
+    for(int j = 0; j < 3; j++)
+    {
+        if(ranks[j] == (ranks[j + 1] + 1) && ranks[j + 1] == (ranks[j + 2] + 1) &&
+           ranks[j + 2] == (ranks[j + 3] + 1) && ranks[j + 3] == (ranks[j + 4] + 1))
+        {
+            for(int p = 0; p < 5; p++)
+            {
+                combination[p][0] = static_cast<char>((p + 1));
+            }
+            pos_straight = j;
+        }
+    }
+}
+
+void GameManager::IsPair(int &pos_pair,
+                         std::deque<Card::Ranks> &ranks,
+                         std::vector<std::string> &combination) {
+    for(int j = 0; j < 6; j++)
+    {
+        if(ranks[j] == ranks[j + 1])
+        {
+            pos_pair += j;
+        }
+    }
+    if(pos_pair != -1)
+        for(int p = 0; p < 2; p++)
+        {
+            combination[p][0] = '1';
+        }
+}
+
+void GameManager::IsTwoPair(int &pos_two_pair, int &pos_pair,
+                            std::deque<Card::Ranks> &ranks,
+                            std::vector<std::string> &combination) {
+    for(int j = 0; j < 6; j++)
+    {
+        if(ranks[j] == ranks[j + 1] && pos_pair != j && pos_pair != j + 1 && pos_pair != j - 1)
+        {
+            pos_two_pair += j;
+        }
+    }
+    if(pos_two_pair != -1)
+    {
+        for(int p = 0; p < 2; p++)
+        {
+            combination[p][0] = '1';
+        }
+        for(int p = 2; p < 4; p++)
+        {
+            combination[p][0] = '2';
+        }
+    }
+}
+
+void GameManager::IsThree(int &pos_three,
+                          std::deque<Card::Ranks> &ranks,
+                          std::vector<std::string> &combination) {
+    for(int j = 0; j < 5; j++)
+    {
+        if(ranks[j] == (ranks[j + 1]) && ranks[j + 1] == (ranks[j + 2]))
+        {
+            pos_three += j;
+        }
+    }
+    if(pos_three != -1)
+        for(int p = 0; p < 3; p++)
+        {
+            combination[p][0] = '1';
+        }
+}
+
+void GameManager::IsFour(int &pos_four,
+                         std::deque<Card::Ranks> &ranks,
+                         std::vector<std::string> &combination) {
+    for(int j = 0; j < 4; j++)
+    {
+        if(ranks[j] == (ranks[j + 1]) && ranks[j + 1] == (ranks[j + 2]) &&
+           ranks[j + 2] == (ranks[j + 3]))
+        {
+            for(int p = 0; p < 4; p++)
+            {
+                combination[p][0] = '1';
+            }
+            pos_four = j;
+            break;
+        }
+    }
+}
+void GameManager::IsFullHouse(int &pos_three,
+                 std::deque<Card::Ranks> &ranks,
+                 std::vector<std::string> &combination) {
+    int pos_pair_in_house = -1;
+    for(int j = 0; j < 6; j++)
+    {
+        if(ranks[j] == ranks[j + 1] && ranks[j] != ranks[pos_three])
+        {
+            pos_pair_in_house++;
+        }
+    }
+    if(pos_pair_in_house != -1)
+    {
+        for(int p = 0; p < 2; p++)
+        {
+            combination[p][0] = '1';
+        }
+        for(int p = 2; p < 5; p++)
+        {
+            combination[p][0] = '2';
+        }
+    }
+}
+
+
+void GameManager::IsMaxCard(int &max,
+                            std::deque<Card::Ranks> &ranks,
+                            std::vector<std::string> &combination) {
+    for(int j = 0; j < 6; j++)
+    {
+        if(ranks[j] > ranks[j + 1])
+        {
+            max = j;
+        }
+    }
+    combination[0][0] = '1';
+}
+
+
+
 
 void GameManager::Play() {
 

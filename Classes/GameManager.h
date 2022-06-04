@@ -34,7 +34,7 @@ public:
         STRAIGHT_FLUSH,
         ROYAL_FLUSH
     };
-    std::vector<std::vector<std::string>> Combinations_vector{
+    const std::vector<std::vector<std::string>> Combinations_vector{
             {"1R", "0R", "0R", "0R", "0R"}, //HIGH_CARD      +
             {"1R", "1R", "0R", "0R", "0R"}, //PAIR           +
             {"1R", "1R", "2R", "2R", "0R"}, //TWO_PAIR       +
@@ -65,6 +65,40 @@ private:
     std::deque<Player*> players;
     std::deque<Table*> table;
     std::deque<Hand*> hand;
+
+
+    void IsFlush(int &pos_flush,
+                 std::deque<Card::Suits> &suits,
+                 std::vector<std::string> &combination);
+
+    void IsStraight(int &pos_straight,
+                    std::deque<Card::Ranks> &ranks,
+                    std::vector<std::string> &combination);
+
+    void IsPair(int &pos_pair,
+                std::deque<Card::Ranks> &ranks,
+                std::vector<std::string> &combination);
+
+    void IsTwoPair(int &pos_two_pair, int &pos_pair,
+                   std::deque<Card::Ranks> &ranks,
+                   std::vector<std::string> &combination);
+
+    void IsThree(int &pos_three,
+                 std::deque<Card::Ranks> &ranks,
+                 std::vector<std::string> &combination);
+
+    void IsFour(int &pos_four,
+                std::deque<Card::Ranks> &ranks,
+                std::vector<std::string> &combination);
+
+    void IsFullHouse(int &pos_three,
+                     std::deque<Card::Ranks> &ranks,
+                     std::vector<std::string> &combination);
+
+    void IsMaxCard(int &max,
+                   std::deque<Card::Ranks> &ranks,
+                   std::vector<std::string> &combination);
+
 };
 
 
