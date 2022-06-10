@@ -32,3 +32,38 @@ std::deque<Card *> Hand::GetDeck() {
 Card::Ranks Hand::GetCardRank(int itter) const{
     return handDeck[itter]->GetRank();
 }
+
+void Hand::SetCardInCombo(int i, bool value) {
+    cardsInCombo[i] = value;
+}
+
+bool Hand::GetCardInCombo(int i) const {
+    return cardsInCombo[i];
+}
+void Hand::SetPlayHand(std::deque<Card*> hand) {
+    play_hand = hand;
+}
+
+std::deque<Card *> Hand::GetPlayHand() {
+    return play_hand;
+}
+
+void Hand::SetComboType(int type) {
+    comboType = type;
+}
+
+int Hand::GetComboType() {
+    return comboType;
+}
+
+void Hand::SetDeck(std::deque<Card*> deck) {
+    handDeck = deck;
+}
+
+Card *Hand::GetMaxCard() {
+    return maxCard;
+}
+
+void Hand::SetMaxCard(Card *card) {
+    maxCard = card;
+}

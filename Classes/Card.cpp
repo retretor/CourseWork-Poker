@@ -36,3 +36,19 @@ void Card::Print() const {
     else
         std::cout << "S" << " ";
 }
+
+bool Card::GetIsOnCombination() {
+    return IsOnCombination;
+}
+
+void Card::SetIsOnCombination(bool value) {
+    IsOnCombination = value;
+}
+
+void Card::SetSuit(Card::Suits suit) {
+    this->suit = suit;
+}
+
+void Card::SetRank(Card::Ranks rank) {
+    this->rank = rank;
+}

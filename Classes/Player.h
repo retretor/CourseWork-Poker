@@ -28,6 +28,7 @@ public:
     int GetWeight() const;
     void SetWin(bool win);
     bool GetWin() const;
+
 private:
     int chip, combination;
     bool isWin;

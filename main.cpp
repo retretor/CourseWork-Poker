@@ -47,6 +47,7 @@ int main() {
         game.PrintPlayers();
         game.PrintTable();
 
+
         deck.Print();
     }
     catch(std::exception& ex)
@@ -56,4 +57,3 @@ int main() {
     }
     return 0;
 }
-

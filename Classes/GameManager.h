@@ -23,16 +23,16 @@ class GameManager {
 public:
     enum Combinations
     {
-        HIGH_CARD,
-        PAIR,
-        TWO_PAIR,
-        THREE_OF_A_KIND,
-        STRAIGHT,
-        FLUSH,
-        FULL_HOUSE,
-        FOUR_OF_A_KIND,
-        STRAIGHT_FLUSH,
-        ROYAL_FLUSH
+        HIGH_CARD = 1,
+        PAIR = 2,
+        TWO_PAIR = 3,
+        THREE_OF_A_KIND = 4,
+        STRAIGHT = 5,
+        FLUSH = 6,
+        FULL_HOUSE = 7,
+        FOUR_OF_A_KIND = 8,
+        STRAIGHT_FLUSH = 9,
+        ROYAL_FLUSH = 10
     };
     const std::vector<std::vector<std::string>> Combinations_vector{
             {"1R", "0R", "0R", "0R", "0R"}, //HIGH_CARD      +
@@ -46,6 +46,7 @@ public:
             {"1A", "2A", "3A", "4A", "5A"}, //STRAIGHT_FLUSH +
             {"6A", "7A", "8A", "9A", "10A"} //ROYAL_FLUSH    +
     };
+
     GameManager();
     ~GameManager();
     void CreatePlayers(int countOfPlayers, Deck* deck);
@@ -66,38 +67,8 @@ private:
     std::deque<Table*> table;
     std::deque<Hand*> hand;
 
+    std::vector<std::vector<bool>> cards;
 
-    void IsFlush(int &pos_flush,
-                 std::deque<Card::Suits> &suits,
-                 std::vector<std::string> &combination);
-
-    void IsStraight(int &pos_straight,
-                    std::deque<Card::Ranks> &ranks,
-                    std::vector<std::string> &combination);
-
-    void IsPair(int &pos_pair,
-                std::deque<Card::Ranks> &ranks,
-                std::vector<std::string> &combination);
-
-    void IsTwoPair(int &pos_two_pair, int &pos_pair,
-                   std::deque<Card::Ranks> &ranks,
-                   std::vector<std::string> &combination);
-
-    void IsThree(int &pos_three,
-                 std::deque<Card::Ranks> &ranks,
-                 std::vector<std::string> &combination);
-
-    void IsFour(int &pos_four,
-                std::deque<Card::Ranks> &ranks,
-                std::vector<std::string> &combination);
-
-    void IsFullHouse(int &pos_three,
-                     std::deque<Card::Ranks> &ranks,
-                     std::vector<std::string> &combination);
-
-    void IsMaxCard(int &max,
-                   std::deque<Card::Ranks> &ranks,
-                   std::vector<std::string> &combination);
 
 };
 
