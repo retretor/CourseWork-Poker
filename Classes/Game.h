@@ -9,6 +9,7 @@
 
 class Game {
 public:
+
     Game();
     ~Game();
     enum GameState {
