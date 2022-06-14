@@ -35,15 +35,10 @@ public:
     Card(Suits suit, Ranks rank);
     Suits GetSuit() const;
     Ranks GetRank() const;
-    void SetSuit(Suits suit);
-    void SetRank(Ranks rank);
     void Print() const;
-    void SetIsOnCombination(bool value);
-    bool GetIsOnCombination();
 private:
     Suits suit;
     Ranks rank;
-    bool IsOnCombination;
 };
 
 #endif //POKER_CARD_H

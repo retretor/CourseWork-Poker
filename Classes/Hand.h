@@ -8,6 +8,7 @@
 #include "Deck.h"
 #include <deque>
 #include <iostream>
+#include <vector>
 
 class Hand {
 public:
@@ -29,6 +30,12 @@ public:
 
     void SetMaxCard(Card* card);
     Card* GetMaxCard();
+
+    void FillCards();
+    std::vector<std::vector<bool>> GetCards();
+
+    void SetMaxCardCombo(int n);
+    int GetMaxCardCombo();
 private:
     std::deque<Card*> handDeck;
 
@@ -40,6 +47,11 @@ private:
     int comboType;
 
     Card* maxCard;
+
+    std::vector<std::vector<bool>> cards;
+    void InitializeCards();
+    void FillCardsN(Card* card, int n);
+    int maxCardCombo;
 };
 
 

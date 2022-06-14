@@ -15,14 +15,8 @@ Player::~Player() {
     playerDeck.clear();
 }
 
-int Player::GetChip() const {
-    return chip;
-}
 void Player::AddChip(int chip) {
     this->chip += chip;
-}
-void Player::SetChip(int chip) {
-    this->chip = chip;
 }
 
 void Player::SetCard(Card* card) {
@@ -39,22 +33,9 @@ void Player::Print() const {
     std::cout << "  Chips: " << chip;
 }
 
-void Player::SetABet(int chip, Table *table) {
-    if(chip > this->chip) throw std::invalid_argument("Too high a bet");
-    AddChip(-chip);
-    table->AddChip(chip);
-}
 
 std::deque<Card *> Player::GetDeck() {
     return playerDeck;
-}
-
-int Player::GetCombination() const{
-    return combination;
-}
-
-void Player::SetCombination(int c) {
-    combination = c;
 }
 
 int Player::GetWeight() const {
@@ -70,4 +51,10 @@ void Player::SetWin(bool win) {
 
 bool Player::GetWin() const{
     return isWin;
+}
+
+
+
+Player::PlayStatus Player::GetPlayStatus() const {
+    return playStatus;
 }

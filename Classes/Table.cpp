@@ -17,13 +17,44 @@ Table::Table() : chip(0) {
 Table::Table(int chip) : chip(chip) {
 
 }
-void Table::Print() const {
-    for(Card* card : tableDeck)
+void Table::Print(int n) const {
+    if(n == 1)
     {
-        card->Print();
-        std::cout << " ";
+        for(int i = 0; i < 5; i++)
+        {
+            std::cout << "** ";
+        }
+        std::cout << std::endl;
     }
-    std::cout << "  Chips: " << chip;
+    else if(n == 2)
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            tableDeck[i]->Print();
+            std::cout << " ";
+        }
+        std::cout << "** **" << std::endl;
+    }
+    else if(n == 3)
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            tableDeck[i]->Print();
+            std::cout << " ";
+        }
+        std::cout << "**" << std::endl;
+    }
+    else
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            tableDeck[i]->Print();
+            std::cout << " ";
+        }
+        std::cout << std::endl;
+    }
+
+    std::cout << "Chips: " << chip;
     std::cout << std::endl;
 }
 void Table::SetCard(Card* card) {
@@ -40,4 +71,8 @@ std::deque<Card *> Table::GetDeck() {
 
 int Table::GetChip() const {
     return chip;
+}
+
+void Table::SetDeck(std::deque<Card *> deck) {
+    tableDeck = deck;
 }

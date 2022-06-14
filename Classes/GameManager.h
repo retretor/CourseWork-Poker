@@ -10,6 +10,10 @@
 #include "Table.h"
 #include "Hand.h"
 #include "Combination.h"
+#include "PlayerHuman.h"
+#include "PlayerComputer.h"
+
+
 #include <deque>
 #include <iostream>
 #include <algorithm>
@@ -21,53 +25,35 @@
 
 class GameManager {
 public:
-    enum Combinations
-    {
-        HIGH_CARD = 1,
-        PAIR = 2,
-        TWO_PAIR = 3,
-        THREE_OF_A_KIND = 4,
-        STRAIGHT = 5,
-        FLUSH = 6,
-        FULL_HOUSE = 7,
-        FOUR_OF_A_KIND = 8,
-        STRAIGHT_FLUSH = 9,
-        ROYAL_FLUSH = 10
-    };
-    const std::vector<std::vector<std::string>> Combinations_vector{
-            {"1R", "0R", "0R", "0R", "0R"}, //HIGH_CARD      +
-            {"1R", "1R", "0R", "0R", "0R"}, //PAIR           +
-            {"1R", "1R", "2R", "2R", "0R"}, //TWO_PAIR       +
-            {"1R", "1R", "1R", "0R", "0R"}, //THREE_OF_A_KIND+
-            {"1R", "2R", "3R", "4R", "5R"}, //STRAIGHT       +
-            {"0A", "0A", "0A", "0A", "0A"}, //FLUSH          +
-            {"1R", "1R", "2R", "2R", "2R"}, //FULL_HOUSE     +
-            {"1R", "1R", "1R", "1R", "0R"}, //FOUR_OF_A_KIND +
-            {"1A", "2A", "3A", "4A", "5A"}, //STRAIGHT_FLUSH +
-            {"6A", "7A", "8A", "9A", "10A"} //ROYAL_FLUSH    +
-    };
-
     GameManager();
     ~GameManager();
-    void CreatePlayers(int countOfPlayers, Deck* deck);
+
+
+    void CreatePlayers(Deck* deck);
     void CreateTable(Deck* deck);
-    void PrintPlayers() const;
-    void PrintTable() const;
-    void Play();
+
+
     void Result();
     void SayHello();
     int GetCountOfPlayers() const;
     void SetABet();
     void CreateHand();
-    void PrintHand();
     void PlayerHasCombo();
-private:
-    int countOfPlayers, maxPlayers = 23;
-    std::deque<Player*> players;
-    std::deque<Table*> table;
-    std::deque<Hand*> hand;
 
-    std::vector<std::vector<bool>> cards;
+    void SetCountOfPlayers();
+
+    void PrintPlayers() const;
+    void PrintTable(int n) const;
+    void PrintHand();
+private:
+    int countOfPlayersHuman, countOfPlayersBots;
+
+
+    const int maxPlayers = 22; // 23 без ботов
+    const int minBots = 0;
+    std::deque<Player*> players;
+    Table* table;
+    std::deque<Hand*> hand;
 
 
 };

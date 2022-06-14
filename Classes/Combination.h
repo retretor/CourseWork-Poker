@@ -17,27 +17,25 @@
 
 class Combination {
 public:
-    std::deque<Card*> ParseCombination(std::deque<Card*> deck);
+    int ParseCombination(std::vector<std::vector<bool>> deck);
     int GetComboType();
 private:
-    int ParseRoyalFlush(std::deque<Card *> deck, int rank);
-    int ParseStraightFlush(std::deque<Card *> deck, int rank);
-    int ParseFourOfAKind(std::deque<Card *> deck);
-    int ParseFullHouse(std::deque<Card *> deck);
-    int ParseFlush(std::deque<Card *> deck);
-    int ParseFlush(std::deque<Card *> deck, int suit);
-    int ParseStraight(std::deque<Card *> deck);
-    int ParseThreeOfAKind(std::deque<Card *> deck);
-    int ParseTwoPair(std::deque<Card *> deck);
-    int ParseOnePair(std::deque<Card *> deck);
-    int ParseHighCard(std::deque<Card *> deck);
+    int ParseRoyalFlush(std::vector<std::vector<bool>> deck);
+    int ParseStraightFlush(std::vector<std::vector<bool>> deck);
+    int ParseFourOfAKind(std::vector<std::vector<bool>> deck);
+    int ParseFullHouse(std::vector<std::vector<bool>> deck);
+    int ParseFlush(std::vector<std::vector<bool>> deck);
+    int ParseStraight(std::vector<std::vector<bool>> deck);
+    int ParseThreeOfAKind(std::vector<std::vector<bool>> deck);
+    int ParseTwoPair(std::vector<std::vector<bool>> deck);
+    int ParseOnePair(std::vector<std::vector<bool>> deck);
+    int ParseHighCard(std::vector<std::vector<bool>> deck);
 
 
-    std::deque<Card*> combination;
-
-    bool switcher = false;
-    int start_rank;
     int comboType;
+
+    int max_card_in_combo;
+
 };
 
 

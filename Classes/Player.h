@@ -13,26 +13,32 @@
 
 class Player {
 public:
+    enum PlayStatus {
+        FOLD,
+        CHECK,
+        RAISE
+    };
     Player();
     ~Player();
     Player(int chip);
-    int GetChip() const;
-    void SetChip(int chip);
     void AddChip(int chip);
     void SetCard(Card* card);
     std::deque<Card*> GetDeck();
     void Print() const;
-    void SetABet(int chip, Table* table);
-    int GetCombination() const;
-    void SetCombination(int c);
     int GetWeight() const;
     void SetWin(bool win);
     bool GetWin() const;
 
-private:
+
+    virtual int SetABet(Table* table, int min_bet) = 0;
+    PlayStatus GetPlayStatus() const;
+protected:
     int chip, combination;
     bool isWin;
     std::deque<Card*> playerDeck;
+
+
+    PlayStatus playStatus;
 };
 
 

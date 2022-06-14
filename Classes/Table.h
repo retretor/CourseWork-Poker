@@ -15,10 +15,11 @@ public:
     ~Table();
     Table(int chip);
     void SetCard(Card* card);
-    void Print() const;
+    void Print(int n) const;
     void AddChip(int chip);
     int GetChip() const;
     std::deque<Card*> GetDeck();
+    void SetDeck(std::deque<Card*> deck);
 private:
     int chip;
     std::deque<Card*> tableDeck;

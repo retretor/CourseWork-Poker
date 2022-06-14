@@ -1,14 +1,13 @@
 #include <iostream>
-#include "./Classes/Card.h"
-#include "./Classes/Deck.h"
-#include "./Classes/Player.h"
-#include "./Classes/Table.h"
-#include "./Classes/GameManager.h"
+#include "./Classes/Game.h"
 
 int main() {
 //create players, deck & table
+    Game game;
+    game.Play();
 
-    try
+
+    /*try
     {
         //---------------------------------------------------------------------
         //create deck
@@ -54,6 +53,6 @@ int main() {
     {
         std::cerr << "Error: ";
         std::cerr << ex.what();
-    }
+    }*/
     return 0;
 }
