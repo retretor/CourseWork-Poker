@@ -19,7 +19,6 @@ public:
         RAISE
     };
     Player();
-    ~Player();
     Player(int chip);
     void AddChip(int chip);
     void SetCard(Card* card);
@@ -33,7 +32,7 @@ public:
     virtual int SetABet(Table* table, int min_bet) = 0;
     PlayStatus GetPlayStatus() const;
 protected:
-    int chip, combination;
+    int chip;
     bool isWin;
     std::deque<Card*> playerDeck;
 

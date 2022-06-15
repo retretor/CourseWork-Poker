@@ -24,7 +24,12 @@ int PlayerHuman::SetABet(Table *table, int min_bet) {
 
     int bet = -1;
     START_BET:
-
+    if((playStatus == RAISE || playStatus == CHECK)
+        && chip == 0)
+    {
+        std::cout << "You are ALL IN\n";
+        return 0;
+    }
     if(min_bet >= chip)
     {
         std::cout << "\n";
@@ -41,7 +46,7 @@ int PlayerHuman::SetABet(Table *table, int min_bet) {
         if(bet == -1)
         {
             playStatus = FOLD;
-            return 0;
+            return -1;
         }
         else Raise(table, chip); // ALL IN
     }
@@ -59,7 +64,7 @@ int PlayerHuman::SetABet(Table *table, int min_bet) {
         if(bet == -1)
         {
             playStatus = FOLD;
-            return 0;
+            return -1;
         }
         else if(bet == 0)
         {
@@ -78,7 +83,7 @@ int PlayerHuman::SetABet(Table *table, int min_bet) {
         std::cout << "If you want to FOLD, enter -1. If you want to RAISE, enter bet: "
                   << std::endl;
         std::cin >> bet;
-        if(bet < -1 || bet > chip)
+        if(bet < -1 || bet > chip || bet < min_bet)
         {
             std::cout << "Invalid bet. Try again." << std::endl;
             goto START_BET;
@@ -87,7 +92,7 @@ int PlayerHuman::SetABet(Table *table, int min_bet) {
         if(bet == -1)
         {
             playStatus = FOLD;
-            return 0;
+            return -1;
         }
         else Raise(table, bet);
         return bet;

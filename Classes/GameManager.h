@@ -34,9 +34,8 @@ public:
 
 
     void Result();
-    void SayHello();
     int GetCountOfPlayers() const;
-    void SetABet();
+    int SetABet();
     void CreateHand();
     void PlayerHasCombo();
 
@@ -44,7 +43,6 @@ public:
 
     void PrintPlayers() const;
     void PrintTable(int n) const;
-    void PrintHand();
 private:
     int countOfPlayersHuman, countOfPlayersBots;
 

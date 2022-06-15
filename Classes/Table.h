@@ -12,7 +12,6 @@
 class Table {
 public:
     Table();
-    ~Table();
     Table(int chip);
     void SetCard(Card* card);
     void Print(int n) const;

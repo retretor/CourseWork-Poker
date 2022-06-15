@@ -3,13 +3,6 @@
 //
 
 #include "Table.h"
-Table::~Table() {
-    for(Card* card : tableDeck)
-    {
-        delete card;
-    }
-    tableDeck.clear();
-}
 
 Table::Table() : chip(0) {
 }
@@ -25,6 +18,9 @@ void Table::Print(int n) const {
             std::cout << "** ";
         }
         std::cout << std::endl;
+        int a;
+        std::cout << "If you ready to bet, enter any number: ";
+        std::cin >> a;
     }
     else if(n == 2)
     {
@@ -34,6 +30,9 @@ void Table::Print(int n) const {
             std::cout << " ";
         }
         std::cout << "** **" << std::endl;
+        int a;
+        std::cout << "If you ready to bet, enter any number: ";
+        std::cin >> a;
     }
     else if(n == 3)
     {
@@ -43,6 +42,9 @@ void Table::Print(int n) const {
             std::cout << " ";
         }
         std::cout << "**" << std::endl;
+        int a;
+        std::cout << "If you ready to bet, enter any number: ";
+        std::cin >> a;
     }
     else
     {

@@ -11,7 +11,6 @@ class Game {
 public:
 
     Game();
-    ~Game();
     enum GameState {
         GameState_Start = 1,
         GameState_CreateDeck = 2,
@@ -34,7 +33,7 @@ private:
     Deck deck;
 
 
-    int countOfSteps = 0;
+    int countOfSteps;
 
     void Start();
     void Print() const;

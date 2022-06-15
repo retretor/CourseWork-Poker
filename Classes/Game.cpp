@@ -6,10 +6,7 @@
 
 Game::Game() {
     gameState = GameState_Start;
-}
-
-Game::~Game() {
-
+    countOfSteps = 1;
 }
 
 void Game::Print() const {
@@ -79,14 +76,19 @@ void Game::CreateTable() {
     manager.CreateTable(&deck);
 }
 void Game::CreateHands() {
-    gameState = GameState_Bet;
+    gameState = GameState_OpenCardsTable;
     manager.CreateHand();
 }
 
 
 void Game::Bet() {
-    manager.SetABet();
-
+    int c = manager.SetABet();
+    if(c == 1)
+    {
+        gameState = GameState_OpenCardsPlayers;
+        countOfSteps = 0;
+        return;
+    }
     if(countOfSteps == 4)
     {
         gameState = GameState_OpenCardsPlayers;

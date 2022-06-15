@@ -5,15 +5,9 @@
 #include "Player.h"
 #define STANDARD_COUNT_OF_CHIPS 1000
 
-Player::Player() : chip(STANDARD_COUNT_OF_CHIPS), combination(0) {};
-Player::Player(int chip) : chip(chip), combination(0) {};
-Player::~Player() {
-    for(Card* card : playerDeck)
-    {
-        delete card;
-    }
-    playerDeck.clear();
-}
+Player::Player() : chip(STANDARD_COUNT_OF_CHIPS),
+    isWin(true), playStatus(CHECK){};
+Player::Player(int chip) : chip(chip) {};
 
 void Player::AddChip(int chip) {
     this->chip += chip;

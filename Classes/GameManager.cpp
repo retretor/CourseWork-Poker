@@ -11,18 +11,9 @@
 GameManager::GameManager() : countOfPlayersBots(1), countOfPlayersHuman(1) {
 
 }
+
 GameManager::~GameManager() {
-    for(Player* player : players)
-    {
-        delete player;
-    }
-    players.clear();
     delete table;
-    for(Hand* _hand : hand)
-    {
-        delete _hand;
-    }
-    hand.clear();
 }
 
 
@@ -66,18 +57,12 @@ void GameManager::PrintPlayers() const{
 
 void GameManager::CreateTable(Deck *deck) {
     //give table cards
+    this->table = new Table();
     for(int i = 0; i < 5; i++)
     {
         table->SetCard(deck->TopCard());
         deck->PopCard();
     }
-    //std::deque<Card*> deck_tmp;
-    //    for(int i = 0; i < 5; i++)
-    //    {
-    //        deck_tmp.push_front(deck->TopCard());
-    //        deck->PopCard();
-    //    }
-    //    table->SetDeck(deck_tmp);
 }
 
 void GameManager::PrintTable(int n) const {
@@ -107,17 +92,6 @@ void GameManager::CreateHand() {
         {
             hand[i]->SetCard(table->GetDeck()[j]);
         }
-    }
-}
-
-void GameManager::PrintHand() {
-    int i = 1;
-    //Print "Player 1: 2C 3S 2D 5C 10C"
-    for(Hand* _hand : hand) {
-        std::cout << "Player " << i << ": ";
-        _hand->Print();
-        std::cout << std::endl;
-        i++;
     }
 }
 
@@ -156,7 +130,7 @@ void GameManager::SetCountOfPlayers(){
 }
 
 
-void GameManager::SetABet() {
+int GameManager::SetABet() {
     int i = 1;
     int min_bet = 0;
     for(Player* player : players){
@@ -164,23 +138,58 @@ void GameManager::SetABet() {
         {
             std::cout << "Player " << i << ": ";
             min_bet = player->SetABet(table, min_bet);
+            if(min_bet == -1)
+            {
+                std::cout << "Player " << i << " fold" << std::endl;
+                player->SetWin(false);
+                int c = 0;
+                for(Player* player_ : players)
+                {
+                    if(player_->GetWin() != true)
+                    {
+                        c++;
+                    }
+                }
+                if(c == GetCountOfPlayers() - 1)
+                {
+                    return 1;
+                }
+            }
             i++;
-            std::cout << "\n\n\n";
+            for(int j = 0; j < 100; j++)
+            {
+                std::cout << std::endl;
+            }
         }
     }
+    return 0;
 }
 
 
 
 void GameManager::PlayerHasCombo() {
+    int c_3 = 0;
     for(int i = 0; i < hand.size(); i++)
     {
-        if(players[i]->GetPlayStatus() == Player::PlayStatus::FOLD)
+        if(players[c_3]->GetPlayStatus() == Player::PlayStatus::FOLD)
         {
             delete hand[i];
             hand.erase(hand.begin() + i);
             i--;
+            c_3++;
         }
+    }
+
+    if(hand.size() == 1)
+    {
+        for(Player* player : players)
+        {
+            if(player->GetWin() != true)
+            {
+                player->SetWin(false);
+            }
+        }
+        return;
     }
    for(Hand* hand_ : hand)
    {
@@ -282,13 +291,12 @@ void GameManager::Result() {
     {
         if(players[i]->GetWin() == true)
         {
-            players[i]->SetWin(false);
             players[i]->AddChip(winChip);
-            players[i]->Print();
-            std::cout << " win with combo: " << hand[i]->GetComboType() << "\n";
-
+            std::cout << "Player " << (i + 1) << " win!\n";;
         }
     }
+
+    table->Print(10);
 
 }
 
