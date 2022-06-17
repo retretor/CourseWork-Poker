@@ -27,33 +27,23 @@ class GameManager {
 public:
     GameManager();
     ~GameManager();
-
-
     void CreatePlayers(Deck* deck);
     void CreateTable(Deck* deck);
-
-
     void Result();
     int GetCountOfPlayers() const;
     int SetABet();
     void CreateHand();
     void PlayerHasCombo();
-
     void SetCountOfPlayers();
-
     void PrintPlayers() const;
     void PrintTable(int n) const;
 private:
     int countOfPlayersHuman, countOfPlayersBots;
-
-
-    const int maxPlayers = 22; // 23 без ботов
+    const int maxPlayers = 22;
     const int minBots = 0;
     std::deque<Player*> players;
     Table* table;
     std::deque<Hand*> hand;
-
-
 };
 
 

@@ -58,8 +58,6 @@ void Hand::FillCards() {
             case Card::Suits::SPADES :
                 FillCardsN(card, 3);
                 break;
-            case Card::NONE:
-                break;
         }
     }
 }

@@ -9,7 +9,6 @@
 
 class Game {
 public:
-
     Game();
     enum GameState {
         GameState_Start = 1,
@@ -17,24 +16,17 @@ public:
         GameState_CreatePlayers = 3,
         GameState_CreateTable = 4,
         GameState_CreateHands = 5,
-
         GameState_Bet = 6,
         GameState_OpenCardsPlayers = 7,
         GameState_OpenCardsTable = 8,
-
         GameState_End = 0
     };
-
     void Play();
 private:
     GameState gameState;
-
     GameManager manager;
     Deck deck;
-
-
     int countOfSteps;
-
     void Start();
     void Print() const;
     void CreatePlayers();
@@ -44,7 +36,6 @@ private:
     void Bet();
     void OpenCardsPlayers();
     void OpenCardsTable();
-
 };
 
 

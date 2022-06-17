@@ -31,9 +31,7 @@ private:
     int ParseOnePair(std::vector<std::vector<bool>> deck);
     int ParseHighCard(std::vector<std::vector<bool>> deck);
 
-
     int comboType;
-
     int max_card_in_combo;
 
 };
